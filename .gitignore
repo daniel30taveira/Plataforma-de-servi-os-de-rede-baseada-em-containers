@@ -1,0 +1,40 @@
+# Ficheiros temporários do LaTeX
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.acn
+*.acr
+*.alg
+
+# (Opcional) Ignorar PDFs gerados temporariamente, exceto o relatório final
+*.pdf
+!relatorio.pdf
+
+# Ficheiros do VS Code
+.vscode/
+
+# Ficheiros do Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# Ficheiros sensíveis de infraestrutura (Ansible/Docker que faremos depois)
+*.pem
+*.key
+.env
