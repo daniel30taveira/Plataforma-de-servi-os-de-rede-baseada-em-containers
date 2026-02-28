@@ -1,25 +1,6 @@
-%\thispagestyle{empty}
+O presente projeto tem como objetivo principal a conceção e implementação de uma plataforma de serviços de rede gerida de forma reprodutível, recorrendo exclusivamente a ferramentas \textit{open source}. A infraestrutura desenvolvida engloba serviços fundamentais para uma rede de pequena a média dimensão, tais como servidor DNS, \textit{Reverse Proxy} HTTPS, serviços \textit{web}, e-mail, servidor de ficheiros e VPN. 
 
-O resumo (no máximo com 250 palavras), permite a avaliação do interesse de um documento e facilita a sua identificação na pesquisa bibliográfica em bases de dados onde o documento se encontre referenciado. 
+Em contraste com abordagens monolíticas tradicionais, todos os serviços são implementados em \textit{containers} (Docker/Podman) através de configuração declarativa, garantindo o versionamento e a reprodutibilidade do ambiente. O trabalho foca-se na aplicação rigorosa de boas práticas de segurança, incluindo o princípio do mínimo privilégio, \textit{hardening} de serviços e encriptação TLS. Adicionalmente, o projeto integra mecanismos avançados de observabilidade (para métricas e \textit{logs} centralizados) e a orquestração de \textit{deployments} através de ferramentas como Ansible e \textit{pipelines} de CI/CD. O resultado final demonstra como um pequeno \textit{data center} pode ser gerido de forma automatizada, ágil e resiliente a falhas.
 
-É recomendável que o resumo aborde, de forma sumária:
-\begin{itemize}
-	\item Objetivos principais e tema ou motivações para o trabalho; 
-	\item Metodologia usada (quando necessário para a compreensão do relatório); 
-	\item Resultados, analisados de um ponto de vista global; 
-	\item Conclusões e consequências dos resultados, e ligação aos objetivos do trabalho.
-\end{itemize}
-
-Como este modelo de relatório se dirige a trabalhos cujo foco incide, maioritariamente, no desenvolvimento de software, algumas destas componentes podem ser menos enfatizadas, e acrescentada informação sobre análise, projeto e implementação do trabalho.
-
-O resumo não deve conter referências bibliográficas.
-
-\mbox{}\linebreak
-\noindent {\bf Palavras-chave:} termos (no máximo 4), que descrevem o trabalho.
-
-
-%\vfill
-%\pagebreak
-%\mbox{}
-%\vfill
-%\pagebreak
+\vspace{1em}
+\noindent \textbf{Palavras-chave:} \textit{Containers}, Orquestração, Serviços de Rede, CI/CD, Observabilidade, \textit{Open Source}.

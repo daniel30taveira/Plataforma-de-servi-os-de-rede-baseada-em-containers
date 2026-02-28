@@ -25,3 +25,12 @@ Para além do correto funcionamento dos serviços, a plataforma tem de respeitar
     \item \textbf{Segurança (\textit{Hardening}):} O projeto exige a aplicação do princípio do mínimo privilégio nos \textit{containers}, gestão segura e isolada de segredos, encriptação obrigatória de tráfego (TLS) e uma política de atualização automatizada das imagens dos \textit{containers}.
     \item \textbf{Pipeline de CI/CD:} Deve ser implementada uma \textit{pipeline} simples (utilizando, por exemplo, o Git em conjunto com um \textit{runner} local) para testar automaticamente as alterações de configuração e assegurar um \textit{deploy} controlado para o ambiente de produção do laboratório.
 \end{itemize}
+
+\section{Ambiente Base: Virtualização e Sistema Operativo}
+
+Para suportar a plataforma e garantir o isolamento do \textit{host} físico, a infraestrutura base será implementada em ambiente virtualizado. 
+
+\begin{itemize}
+    \item \textbf{Virtualização (VMware):} A plataforma escolhida para o \textit{hypervisor} local é o VMware (Workstation/Player). Esta escolha justifica-se pela sua estabilidade, excelente gestão de redes virtuais (Bridged/NAT) necessárias para simular o tráfego externo/interno e eficiência na alocação de recursos.
+    \item \textbf{Sistema Operativo (\textit{Guest OS}):} Para o sistema operativo que irá alojar os \textit{containers}, optou-se por uma distribuição Linux orientada a servidores, nomeadamente o \textbf{Ubuntu Server 24.04 LTS} (ou alternativamente o \textbf{Debian 12}). Estas distribuições foram selecionadas por possuírem vasto suporte da comunidade, excelente compatibilidade nativa com o Docker/Podman e com o Ansible, e por não incluírem interfaces gráficas (\textit{headless}), o que minimiza a superfície de ataque e o consumo de recursos.
+\end{itemize}
