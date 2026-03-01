@@ -57,3 +57,35 @@ A execução deste \textit{Playbook} a partir da máquina local do administrador
     \caption{Execução bem-sucedida do \textit{Playbook} de instalação do Docker.}
     \label{fig:ansible_sucesso}
 \end{figure}
+
+\section{Implementação dos Serviços Base}
+
+Garantida a configuração do \textit{host}, avançou-se para o \textit{deploy} dos primeiros serviços da plataforma. O guião estipula o uso de definição declarativa, pelo que se adotou o Docker Compose para orquestrar os \textit{containers}.
+
+O primeiro bloco de infraestrutura foca-se em dois serviços essenciais:
+\begin{itemize}
+    \item \textbf{Reverse Proxy (Nginx):} Atua como o ponto de entrada único da rede, expondo as portas 80 e 443. Futuramente, será responsável por encaminhar os pedidos para os serviços corretos e gerir os certificados TLS.
+    \item \textbf{Servidor DNS (Pi-hole):} Implementado para atuar como servidor autoritativo e recursivo da rede interna, permitindo resolução de nomes personalizada e bloqueio de domínios indesejados a nível de rede.
+\end{itemize}
+
+Para manter a filosofia de Infraestrutura como Código, os ficheiros \texttt{docker-compose.yml} não são criados manualmente no servidor. Em vez disso, foi desenvolvido um novo \textit{Playbook} de Ansible (\texttt{deploy\_servicos.yml}) responsável por transferir a pasta de serviços do \textit{Control Node} para o servidor e executar o comando de inicialização (\texttt{docker compose up -d}). A Figura \ref{fig:pihole_admin} comprova a execução bem-sucedida do processo, demonstrando o acesso ao painel de administração do servidor DNS acabado de instanciar.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{pihole_admin.png}
+    \caption{Interface de administração do servidor DNS (Pi-hole) a correr em \textit{container}.}
+    \label{fig:pihole_admin}
+\end{figure}
+
+\subsection*{Procedimentos de \textit{Troubleshooting} Ativos}
+
+Durante a fase de implementação e orquestração do serviço DNS (Pi-hole) via Docker Compose, identificou-se uma limitação comportamental no \textit{container}: a variável de ambiente \texttt{WEBPASSWORD} definida declarativamente pode não ser aplicada de imediato se o volume do \textit{container} já se encontrar persistido com configurações vazias ou padrão.
+
+Para ultrapassar esta limitação sem comprometer o estado do \textit{host} físico, recorreu-se a técnicas de \textit{troubleshooting} avançado. Utilizando o comando \texttt{docker exec}, foi possível interagir diretamente com a \textit{shell} interna do \textit{container} em tempo de execução e aplicar a correção (neste caso, a definição da palavra-passe de acesso) sem necessidade de reconfigurar todo o serviço:
+
+\begin{lstlisting}[language=bash, frame=single, breaklines=true]
+# Comando executado via SSH no servidor host para injecao no container
+sudo docker exec dns_pihole pihole setpassword 'nova_password'
+\end{lstlisting}
+
+Este tipo de intervenção pontual demonstra a flexibilidade das arquiteturas baseadas em \textit{containers}: os problemas podem ser isolados e resolvidos diretamente dentro do ecossistema do serviço afetado, mantendo a integridade do servidor \textit{host} e dos restantes serviços da plataforma.

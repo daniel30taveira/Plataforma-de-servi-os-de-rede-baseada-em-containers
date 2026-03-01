@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # Reverse Proxy / Servidor Web
+  proxy_web:
+    image: nginx:latest
+    container_name: nginx_proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - rede_interna
+
+  # Servidor DNS (Pi-Hole)
+  servidor_dns:
+    image: pihole/pihole:latest
+    container_name: dns_pihole
+    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8080:80" # A porta 8080 vai dar acesso ao painel de controlo do DNS
+    environment:
+      TZ: 'Europe/Lisbon'
+      WEBPASSWORD: '123.,' # Esta será a password do painel
+    networks:
+      - rede_interna
+
+# Criei uma rede isolada para os containers comunicarem de forma segura
+networks:
+  rede_interna:
+    driver: bridge
